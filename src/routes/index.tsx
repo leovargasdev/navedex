@@ -1,4 +1,4 @@
-import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
@@ -6,7 +6,7 @@ import Login from '../pages/Login';
 
 export default function Navigation() {
   return (
-    <NavigationContainer theme={DarkTheme}>
+    <NavigationContainer>
       <RootNavigator />
     </NavigationContainer>
   );
