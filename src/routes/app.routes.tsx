@@ -9,7 +9,7 @@ import LogoNavers from '../assets/logo.png';
 import Home from '../pages/Home';
 import Naver from '../pages/Naver';
 import CreateNaver from '../pages/CreateNaver';
-// import EditNaver from '../pages/EditNaver';
+import EditNaver from '../pages/EditNaver';
 
 function NotificationsScreen() {
   return (
@@ -77,8 +77,17 @@ const NaversNavigator = () => {
           ),
         })}
       />
-      {/* <StackNaver.Screen name="CreateNaver" component={CreateNaver} />
-      <StackNaver.Screen name="EditNaver" component={EditNaver} /> */}
+      <StackNaver.Screen
+        name="EditNaver"
+        component={EditNaver}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <RectButton onPress={() => navigation.goBack()}>
+              <Icon name="chevron-left" color="#424242" size={24} />
+            </RectButton>
+          ),
+        })}
+      />
     </StackNaver.Navigator>
   );
 };

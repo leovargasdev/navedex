@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable camelcase */
 import React, { useState, useCallback, useMemo } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { differenceInYears } from 'date-fns';
@@ -29,6 +29,8 @@ interface NaverProps {
 
 const Naver: React.FC = () => {
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const naver = {
@@ -116,7 +118,7 @@ const Naver: React.FC = () => {
           </ControllButton>
 
           <ControllButton
-            onPress={() => {}}
+            onPress={() => navigate('EditNaver', { naverId: naver.id })}
             style={{ marginLeft: 16, backgroundColor: colors.black }}
           >
             <Icon name="pencil-alt" size={18} color={colors.white} />

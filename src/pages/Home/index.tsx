@@ -93,7 +93,7 @@ const Home: React.FC = () => {
     <Container>
       <Header>
         <HeaderText>Navers</HeaderText>
-        <HeaderButton onPress={() => navigate('Naver')}>
+        <HeaderButton onPress={() => navigate('CreateNaver')}>
           <HeaderButtonText>Adicionar naver</HeaderButtonText>
         </HeaderButton>
       </Header>
@@ -106,11 +106,15 @@ const Home: React.FC = () => {
         renderItem={({ item }) => {
           return (
             <Naver>
-              <NaverAvatar
-                source={{
-                  uri: `https://api.adorable.io/avatars/156/${item.id}.png`,
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => navigate('Naver', { naverId: item.id })}
+              >
+                <NaverAvatar
+                  source={{
+                    uri: `https://api.adorable.io/avatars/156/${item.id}.png`,
+                  }}
+                />
+              </TouchableOpacity>
               <NaverName>{item.name}</NaverName>
               <NaverProject>{item.project}</NaverProject>
 
@@ -119,7 +123,9 @@ const Home: React.FC = () => {
                   <Icon name="trash" size={18} color="#212121" />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity
+                  onPress={() => navigate('EditNaver', { naverId: item.id })}
+                >
                   <Icon
                     name="pencil-alt"
                     size={18}
