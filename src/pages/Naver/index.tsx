@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable camelcase */
 import React, { useState, useCallback, useMemo } from 'react';
-import { FontAwesome5 as Icon, FontAwesome } from '@expo/vector-icons';
-import { Modal, TouchableOpacity } from 'react-native';
+import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { differenceInYears } from 'date-fns';
+
+import Modal from '../../components/Modal';
 import {
   Container,
   Avatar,
@@ -14,9 +15,6 @@ import {
   Controll,
   ControllButton,
   ControllButtonText,
-  ModalContent,
-  ModalView,
-  ModalHeader,
 } from './styles';
 // import api from '../../services/api';
 
@@ -67,35 +65,30 @@ const Naver: React.FC = () => {
 
   return (
     <Container>
-      <Modal animationType="fade" visible={modalVisible} transparent>
-        <ModalContent>
-          <ModalView>
-            <ModalHeader>
-              <Name>Excluir Naver</Name>
-              <TouchableOpacity onPress={handleToggleModal}>
-                <FontAwesome name="close" size={24} color={colors.black} />
-              </TouchableOpacity>
-            </ModalHeader>
-            <InfoText>Tem certeza que deseja excluir este naver?</InfoText>
-            <Controll>
-              <ControllButton onPress={handleToggleModal}>
-                <ControllButtonText style={{ color: colors.black }}>
-                  Cancelar
-                </ControllButtonText>
-              </ControllButton>
+      <Modal
+        title="Excluir Naver"
+        handleToggleModal={handleToggleModal}
+        visible={modalVisible}
+      >
+        <InfoText>Tem certeza que deseja excluir este naver?</InfoText>
+        <Controll>
+          <ControllButton onPress={handleToggleModal}>
+            <ControllButtonText style={{ color: colors.black }}>
+              Cancelar
+            </ControllButtonText>
+          </ControllButton>
 
-              <ControllButton
-                onPress={handleDeleteNaver}
-                style={{ marginLeft: 16, backgroundColor: colors.black }}
-              >
-                <ControllButtonText style={{ color: colors.white }}>
-                  Excluir
-                </ControllButtonText>
-              </ControllButton>
-            </Controll>
-          </ModalView>
-        </ModalContent>
+          <ControllButton
+            onPress={handleDeleteNaver}
+            style={{ marginLeft: 16, backgroundColor: colors.black }}
+          >
+            <ControllButtonText style={{ color: colors.white }}>
+              Excluir
+            </ControllButtonText>
+          </ControllButton>
+        </Controll>
       </Modal>
+
       <Avatar
         source={{
           uri: `https://api.adorable.io/avatars/156/${naver.url}`,

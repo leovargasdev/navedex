@@ -63,25 +63,3 @@ export const ControllButtonText = styled.Text`
   margin-left: 10px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
-
-export const ModalContent = styled.View`
-  flex: 1;
-  background: rgba(0, 0, 0, 0.7);
-  justify-content: center;
-  padding: 0 16px;
-`;
-
-export const ModalView = styled.View`
-  width: 100%;
-  background: #fff;
-  padding: 16px 24px;
-  border-radius: 4px;
-`;
-
-export const ModalHeader = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 16px;
-`;

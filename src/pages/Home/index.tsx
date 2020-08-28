@@ -2,8 +2,8 @@
 import React from 'react';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
+
 import {
   Container,
   Header,

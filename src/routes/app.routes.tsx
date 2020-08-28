@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LogoNavers from '../assets/logo.png';
 import Home from '../pages/Home';
 import Naver from '../pages/Naver';
-// import CreateNaver from '../pages/CreateNaver';
+import CreateNaver from '../pages/CreateNaver';
 // import EditNaver from '../pages/EditNaver';
 
 function NotificationsScreen() {
@@ -58,6 +58,17 @@ const NaversNavigator = () => {
       <StackNaver.Screen
         name="Naver"
         component={Naver}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <RectButton onPress={() => navigation.goBack()}>
+              <Icon name="chevron-left" color="#424242" size={24} />
+            </RectButton>
+          ),
+        })}
+      />
+      <StackNaver.Screen
+        name="CreateNaver"
+        component={CreateNaver}
         options={({ navigation }) => ({
           headerLeft: () => (
             <RectButton onPress={() => navigation.goBack()}>
