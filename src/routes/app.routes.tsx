@@ -36,10 +36,11 @@ const NaversNavigator = () => {
     <StackNaver.Navigator
       screenOptions={{
         headerShown: true,
+        headerStyle: { height: 80 },
         headerTitleAlign: 'center',
         headerTitle: props => <LogoTitle {...props} />,
         headerLeftContainerStyle: {
-          padding: 16,
+          marginLeft: 16,
         },
       }}
     >
