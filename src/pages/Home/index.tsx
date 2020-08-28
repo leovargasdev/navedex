@@ -3,6 +3,7 @@ import React from 'react';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import {
   Container,
   Header,
@@ -24,6 +25,7 @@ export interface NaverProps {
 }
 
 const Home: React.FC = () => {
+  const { navigate } = useNavigation();
   const data = [
     {
       id: 'c465942d-4a78-4c5d-92cf-0e6f112394bb',
@@ -91,7 +93,7 @@ const Home: React.FC = () => {
     <Container>
       <Header>
         <HeaderText>Navers</HeaderText>
-        <HeaderButton onPress={() => {}}>
+        <HeaderButton onPress={() => navigate('Naver')}>
           <HeaderButtonText>Adicionar naver</HeaderButtonText>
         </HeaderButton>
       </Header>
