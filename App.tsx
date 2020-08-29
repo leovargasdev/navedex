@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from './src/styles/theme/default';
 import useResources from './src/hooks/useResources';
 
 import Routes from './src/routes';
+import { AppProvider } from './src/hooks/auth';
 
 const App: React.FC = () => {
   const isLoadingComplete = useResources();
@@ -14,10 +14,10 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <SafeAreaProvider>
+      <AppProvider>
         <Routes />
         <StatusBar />
-      </SafeAreaProvider>
+      </AppProvider>
     </ThemeProvider>
   );
 };

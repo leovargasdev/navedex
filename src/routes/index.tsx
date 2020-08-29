@@ -1,10 +1,11 @@
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
-
-import App from './app.routes';
+import { View, ActivityIndicator } from 'react-native';
 
 import Login from '../pages/Login';
+import { useAuth } from '../hooks/auth';
+import AppRoutes from './app.routes';
 
 export default function Navigation() {
   return (
@@ -17,10 +18,23 @@ export default function Navigation() {
 const Stack = createStackNavigator();
 
 function RootNavigator() {
-  return (
+  const { user, loading } = useAuth();
+
+  console.log('RootNavigator', user);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color="#999" />
+      </View>
+    );
+  }
+
+  return user ? (
+    <AppRoutes />
+  ) : (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="App" component={App} />
-      {/* <Stack.Screen name="Login" component={Login} /> */}
+      <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>
   );
 }

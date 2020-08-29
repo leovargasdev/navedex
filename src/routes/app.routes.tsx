@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Button, View, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { Image } from 'react-native';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -11,12 +11,14 @@ import Naver from '../pages/Naver';
 import CreateNaver from '../pages/CreateNaver';
 import EditNaver from '../pages/EditNaver';
 
+import { useAuth } from '../hooks/auth';
+
 function NotificationsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => {}} title="Go back home" />
-    </View>
-  );
+  const { signOut } = useAuth();
+
+  useEffect(() => signOut(), [signOut]);
+
+  return <></>;
 }
 
 // const ButtonToggleMenu = ({}) => (
