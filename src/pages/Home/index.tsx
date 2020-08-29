@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 import {
   Container,
@@ -26,6 +26,9 @@ export interface NaverProps {
 }
 
 const Home: React.FC = () => {
+  // Verificando o foco da tela/rota, desta maneira, podemos adicionar essa variável no array de dependências
+  // do useEffect que carrega os navers, assim podemos recarregar a lista de navers quando ela sobre alguma alteração.
+  const isFocused = useIsFocused();
   const { navigate } = useNavigation();
   const [naver, setNavers] = useState<NaverProps[]>([]);
 
@@ -39,7 +42,7 @@ const Home: React.FC = () => {
         })),
       );
     });
-  }, []);
+  }, [isFocused]);
 
   return (
     <Container>

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import React, { useState, useCallback, useMemo } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { differenceInYears } from 'date-fns';
@@ -16,6 +16,7 @@ import {
   ControllButton,
   ControllButtonText,
 } from './styles';
+import api from '../../services/api';
 // import api from '../../services/api';
 
 interface NaverProps {
@@ -27,32 +28,38 @@ interface NaverProps {
   url: string;
 }
 
+interface NaverRouteProps {
+  params: {
+    naverId: string;
+  };
+}
+
 const Naver: React.FC = () => {
   const { colors } = useTheme();
-  const { navigate } = useNavigation();
+  const { navigate, goBack } = useNavigation();
+  // Foi criado a interface NaverRouteProps para que o typescript reconheca a propriedade naverId de dentro de route.params
+  const {
+    params: { naverId },
+  } = useRoute() as NaverRouteProps;
 
+  const [naver, setNaver] = useState({} as NaverProps);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const naver = {
-    id: 'c465942d-4a78-4c5d-92cf-0e6f112394bb',
-    name: 'Christian Tavares',
-    admission_date: '2018-08-19T00:00:00.000Z',
-    job_role: 'Desenvolvedor',
-    user_id: '31bde47a-e898-49e1-b305-efb772321539',
-    project: 'Project Backend Test',
-    birthdate: '1992-04-12T00:00:00.000Z',
-    url: 'aaa.png',
-  };
+  useEffect(() => {
+    api.get(`/navers/${naverId}`).then(response => setNaver(response.data));
+  }, [naverId]);
+
   // Pega o atual estado da variável modalVisible e inverte seu valor.
   const handleToggleModal = useCallback(
     () => setModalVisible(state => !state),
     [],
   );
 
-  const handleDeleteNaver = useCallback(() => {
-    console.log(naver.id);
-    // api.delete(`/delete/${naver.id}`);
-  }, [naver.id]);
+  const handleDeleteNaver = useCallback(async () => {
+    await api.delete(`/navers/${naverId}`);
+    setModalVisible(false);
+    goBack();
+  }, [naverId]);
 
   const ageFormatted = useMemo(
     () => `${differenceInYears(new Date(), new Date(naver.birthdate))} anos`,
