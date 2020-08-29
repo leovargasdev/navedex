@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +17,7 @@ import {
   NaverProject,
   NaverControll,
 } from './styles';
+import api from '../../services/api';
 
 export interface NaverProps {
   id: string;
@@ -26,68 +27,19 @@ export interface NaverProps {
 
 const Home: React.FC = () => {
   const { navigate } = useNavigation();
-  const data = [
-    {
-      id: 'c465942d-4a78-4c5d-92cf-0e6f112394bb',
-      name: 'Christian Tavares',
-      admission_date: '2018-08-19T00:00:00.000Z',
-      job_role: 'Desenvolvedor',
-      user_id: '31bde47a-e898-49e1-b305-efb772321539',
-      project: 'Project Backend Test',
-      birthdate: '1992-04-12T00:00:00.000Z',
-      url: 'aaa.png',
-    },
-    {
-      id: '3a27927a-7abb-4f7d-addd-8288fb464afd',
-      name: 'Tavares Christian',
-      admission_date: '2018-08-19T00:00:00.000Z',
-      job_role: 'Desenvolvedor',
-      user_id: '31bde47a-e898-49e1-b305-efb772321539',
-      project: 'Project Frontend',
-      birthdate: '1992-04-12T00:00:00.000Z',
-      url: 'aaa.png',
-    },
-    {
-      id: '5df3fa83-a66b-4b49-bbda-b1972d165b2e',
-      name: 'Juliano Reis',
-      admission_date: '2018-08-19T00:00:00.000Z',
-      job_role: 'Desenvolvedor',
-      user_id: '31bde47a-e898-49e1-b305-efb772321539',
-      project: 'Front-end Developer',
-      birthdate: '1992-04-12T00:00:00.000Z',
-      url: 'profile.png',
-    },
-    {
-      id: 'fe57d675-910c-401c-9af4-8daf4cd0a4ce',
-      name: 'Gabriel do Couto',
-      admission_date: '2018-08-19T00:00:00.000Z',
-      job_role: 'Desenvolvedor',
-      user_id: '31bde47a-e898-49e1-b305-efb772321539',
-      project: 'Front-end Developer',
-      birthdate: '1992-04-12T00:00:00.000Z',
-      url: 'profile.png',
-    },
-    {
-      id: '57b9a05e-d81f-4f69-9693-0396446d3472',
-      name: 'Eduardo Bittencourt',
-      admission_date: '2018-08-19T00:00:00.000Z',
-      job_role: 'Desenvolvedor',
-      user_id: '31bde47a-e898-49e1-b305-efb772321539',
-      project: 'Front-end Developer',
-      birthdate: '1992-04-12T00:00:00.000Z',
-      url: 'profile.png',
-    },
-    {
-      id: 'af785ad1-9585-402b-9665-48e806ba03c0',
-      name: 'Gustavo Pinho',
-      admission_date: '2018-08-19T00:00:00.000Z',
-      job_role: 'Desenvolvedor',
-      user_id: '31bde47a-e898-49e1-b305-efb772321539',
-      project: 'Technology Manager',
-      birthdate: '1992-04-12T00:00:00.000Z',
-      url: 'profile.png',
-    },
-  ];
+  const [naver, setNavers] = useState<NaverProps[]>([]);
+
+  useEffect(() => {
+    api.get('/navers').then(response => {
+      setNavers(
+        response.data.map((naverResponse: NaverProps) => ({
+          id: naverResponse.id,
+          name: naverResponse.name,
+          project: naverResponse.project,
+        })),
+      );
+    });
+  }, []);
 
   return (
     <Container>
@@ -99,7 +51,7 @@ const Home: React.FC = () => {
       </Header>
 
       <NaversList
-        data={data}
+        data={naver}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
         keyExtractor={item => item.id}
         numColumns={2}
