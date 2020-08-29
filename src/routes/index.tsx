@@ -20,8 +20,6 @@ const Stack = createStackNavigator();
 function RootNavigator() {
   const { user, loading } = useAuth();
 
-  console.log('RootNavigator', user);
-
   if (loading) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

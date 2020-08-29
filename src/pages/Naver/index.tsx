@@ -5,7 +5,8 @@ import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { differenceInYears } from 'date-fns';
 
-import Modal from '../../components/Modal';
+import ModalRemoveNave from '../../components/ModalRemoveNave';
+
 import {
   Container,
   Avatar,
@@ -17,7 +18,6 @@ import {
   ControllButtonText,
 } from './styles';
 import api from '../../services/api';
-// import api from '../../services/api';
 
 interface NaverProps {
   id: string;
@@ -36,7 +36,7 @@ interface NaverRouteProps {
 
 const Naver: React.FC = () => {
   const { colors } = useTheme();
-  const { navigate, goBack } = useNavigation();
+  const { navigate } = useNavigation();
   // Foi criado a interface NaverRouteProps para que o typescript reconheca a propriedade naverId de dentro de route.params
   const {
     params: { naverId },
@@ -55,12 +55,6 @@ const Naver: React.FC = () => {
     [],
   );
 
-  const handleDeleteNaver = useCallback(async () => {
-    await api.delete(`/navers/${naverId}`);
-    setModalVisible(false);
-    goBack();
-  }, [naverId]);
-
   const ageFormatted = useMemo(
     () => `${differenceInYears(new Date(), new Date(naver.birthdate))} anos`,
     [naver.birthdate],
@@ -74,29 +68,11 @@ const Naver: React.FC = () => {
 
   return (
     <Container>
-      <Modal
-        title="Excluir Naver"
+      <ModalRemoveNave
+        naverId={naverId}
         handleToggleModal={handleToggleModal}
-        visible={modalVisible}
-      >
-        <InfoText>Tem certeza que deseja excluir este naver?</InfoText>
-        <Controll>
-          <ControllButton onPress={handleToggleModal}>
-            <ControllButtonText style={{ color: colors.black }}>
-              Cancelar
-            </ControllButtonText>
-          </ControllButton>
-
-          <ControllButton
-            onPress={handleDeleteNaver}
-            style={{ marginLeft: 16, backgroundColor: colors.black }}
-          >
-            <ControllButtonText style={{ color: colors.white }}>
-              Excluir
-            </ControllButtonText>
-          </ControllButton>
-        </Controll>
-      </Modal>
+        modalVisible={modalVisible}
+      />
 
       <Avatar
         source={{

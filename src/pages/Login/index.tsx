@@ -12,7 +12,6 @@ import {
 } from '../../components/Form/styles';
 
 import LogoNave from '../../assets/logo.png';
-import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
 
 import { Container, Content, Logo } from './styles';
@@ -25,23 +24,24 @@ const Login: React.FC = () => {
 
   const handleLogin = useCallback(async () => {
     try {
-      // const schema = Yup.object().shape({
-      //   email: Yup.string()
-      //     .required('O email é obrigatório')
-      //     .email('Email inválido'),
-      //   password: Yup.string().required('A senha é obrigatória'),
-      // });
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required('O email é obrigatório')
+          .email('Email inválido'),
+        password: Yup.string().required('A senha é obrigatória'),
+      });
 
-      // console.log(email, password, 'handleLogin()');
+      console.log(email, password, 'handleLogin()');
 
-      // await schema.validate(
-      //   { email, password },
-      //   {
-      //     abortEarly: false,
-      //   },
-      // );
+      await schema.validate(
+        { email, password },
+        {
+          abortEarly: false,
+        },
+      );
 
-      await signIn({ email: 'leo@nave.rs', password: 'nave1234' });
+      // await signIn({ email: 'leo@nave.rs', password: 'nave1234' });
+      await signIn({ email, password });
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         err.inner.forEach(e => {
@@ -85,7 +85,7 @@ const Login: React.FC = () => {
             />
           </ContainerInput>
 
-          <Button onPress={handleLogin}>
+          <Button onPress={() => handleLogin()}>
             <ButtonText>Entrar</ButtonText>
           </Button>
         </Form>
