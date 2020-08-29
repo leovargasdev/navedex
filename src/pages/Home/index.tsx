@@ -2,11 +2,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import {
-  useNavigation,
-  useIsFocused,
-  useFocusEffect,
-} from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 import ModalRemoveNave from '../../components/ModalRemoveNave';
 import {
@@ -35,6 +31,7 @@ export interface NaverProps {
 const Home: React.FC = () => {
   // Verificando o foco da tela/rota, desta maneira, podemos adicionar essa variável no array de dependências
   // do useEffect que carrega os navers, assim podemos recarregar a lista de navers quando ela sobre alguma alteração.
+  const isFocus = useIsFocused();
   const { navigate } = useNavigation();
   const { signOut } = useAuth();
   const [navers, setNavers] = useState<NaverProps[]>([]);
@@ -42,19 +39,17 @@ const Home: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   // OBS: NÃO ESTÁ FUNCIONANDO PARA QUANDO O ITEM É REMOVIDO!!!
-  useFocusEffect(
-    React.useCallback(() => {
-      api.get('/navers').then(response => {
-        setNavers(
-          response.data.map((naverResponse: NaverProps) => ({
-            id: naverResponse.id,
-            name: naverResponse.name,
-            project: naverResponse.project,
-          })),
-        );
-      });
-    }, []),
-  );
+  useEffect(() => {
+    api.get('/navers').then(response => {
+      setNavers(
+        response.data.map((naverResponse: NaverProps) => ({
+          id: naverResponse.id,
+          name: naverResponse.name,
+          project: naverResponse.project,
+        })),
+      );
+    });
+  }, [isFocus]);
 
   const handleToggleModal = useCallback((id = naverSelected) => {
     setNaverSelected(id);

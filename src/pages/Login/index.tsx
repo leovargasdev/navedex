@@ -31,8 +31,6 @@ const Login: React.FC = () => {
         password: Yup.string().required('A senha é obrigatória'),
       });
 
-      console.log(email, password, 'handleLogin()');
-
       await schema.validate(
         { email, password },
         {
@@ -40,9 +38,9 @@ const Login: React.FC = () => {
         },
       );
 
-      // await signIn({ email: 'leo@nave.rs', password: 'nave1234' });
       await signIn({ email, password });
     } catch (err) {
+      // OBS: FAZER ALGUMA FORMA DE MOSTRAR OS ERROS
       if (err instanceof Yup.ValidationError) {
         err.inner.forEach(e => {
           console.log(e.path, e.message);
@@ -54,7 +52,7 @@ const Login: React.FC = () => {
         );
       }
     }
-  }, [signIn]);
+  }, [signIn, email, password]);
 
   return (
     <Container>
