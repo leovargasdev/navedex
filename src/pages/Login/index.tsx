@@ -14,13 +14,15 @@ interface Errors {
 }
 
 const Login: React.FC = () => {
+  const fieldsForm = {
+    email: '',
+    password: '',
+  };
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errorsInputs, setErrorsInputs] = useState({
-    email: '',
-    password: '',
-  });
+  const [errorsInputs, setErrorsInputs] = useState(fieldsForm);
 
   // const inputPassword = useRef<TextInput>(null);
 
@@ -28,6 +30,7 @@ const Login: React.FC = () => {
 
   const handleLogin = useCallback(async () => {
     setLoading(true);
+    setErrorsInputs(fieldsForm); // Limpando os erros
     try {
       const schema = Yup.object().shape({
         email: Yup.string()
@@ -44,15 +47,18 @@ const Login: React.FC = () => {
       );
 
       await signIn({ email, password });
-      setLoading(false);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const validationErrors: Errors = {};
+
+        // const fields = Object.keys(fieldsForm);
+
+        // fields.map( fieldname =>)
         err.inner.forEach(e => {
           validationErrors[e.path] = e.message;
         });
-
-        setErrorsInputs({ ...validationErrors, ...errorsInputs });
+        //
+        setErrorsInputs({ ...fieldsForm, ...validationErrors });
 
         Alert.alert(
           'Erro na autenticação',
@@ -60,6 +66,7 @@ const Login: React.FC = () => {
         );
       }
     }
+    setLoading(false);
   }, [signIn, email, password]);
 
   return (

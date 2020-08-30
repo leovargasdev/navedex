@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 
 import { Container, Content, Title } from './styles';
 
-import FormNaver, { NaverProps } from '../../components/Form';
+import FormNaver, { NaverProps } from '../../components/FormNaver';
 import Modal from '../../components/Modal';
 
 import api from '../../services/api';

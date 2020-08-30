@@ -15,7 +15,7 @@ const InputComponent: React.FC<InputProps> = ({ error, label, ...rest }) => {
     <Container>
       <Label>{label}</Label>
       <ContainerInput error={!!error}>
-        <Input {...rest} />
+        <Input placeholderTextColor="#9E9E9E" {...rest} />
       </ContainerInput>
       {!!error && <ErrorText>{error}</ErrorText>}
     </Container>
