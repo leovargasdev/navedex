@@ -1,28 +1,33 @@
-import React, { useCallback, useState } from 'react';
-import { Alert } from 'react-native';
+import React, { useCallback, useState, useRef } from 'react';
+import { Alert, TextInput, ActivityIndicator } from 'react-native';
 import * as Yup from 'yup';
 
-import {
-  Form,
-  Label,
-  ContainerInput,
-  Input,
-  Button,
-  ButtonText,
-} from '../../components/Form/styles';
+import Input from '../../components/Input';
 
 import LogoNave from '../../assets/logo.png';
 import { useAuth } from '../../hooks/auth';
 
-import { Container, Content, Logo } from './styles';
+import { Container, Content, Logo, Form, Button, ButtonText } from './styles';
+
+interface Errors {
+  [key: string]: string;
+}
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorsInputs, setErrorsInputs] = useState({
+    email: '',
+    password: '',
+  });
+
+  // const inputPassword = useRef<TextInput>(null);
 
   const { signIn } = useAuth();
 
   const handleLogin = useCallback(async () => {
+    setLoading(true);
     try {
       const schema = Yup.object().shape({
         email: Yup.string()
@@ -39,16 +44,19 @@ const Login: React.FC = () => {
       );
 
       await signIn({ email, password });
+      setLoading(false);
     } catch (err) {
-      // OBS: FAZER ALGUMA FORMA DE MOSTRAR OS ERROS
       if (err instanceof Yup.ValidationError) {
+        const validationErrors: Errors = {};
         err.inner.forEach(e => {
-          console.log(e.path, e.message);
+          validationErrors[e.path] = e.message;
         });
+
+        setErrorsInputs({ ...validationErrors, ...errorsInputs });
 
         Alert.alert(
           'Erro na autenticação',
-          'Ocorreu um erro ao efetuar o login',
+          'Verifique os campos do formulário',
         );
       }
     }
@@ -58,10 +66,17 @@ const Login: React.FC = () => {
     <Container>
       <Content>
         <Logo source={LogoNave} />
-        <Form>
-          <Label>E-mail</Label>
-          <ContainerInput>
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#999"
+            style={{ marginTop: 100 }}
+          />
+        ) : (
+          <Form>
             <Input
+              label="E-mail"
+              error={errorsInputs.email}
               value={email}
               onChangeText={value => setEmail(value)}
               autoCorrect={false}
@@ -69,24 +84,26 @@ const Login: React.FC = () => {
               placeholderTextColor="#9E9E9E"
               keyboardType="email-address"
               placeholder="E-mail"
+              returnKeyType="next"
+              // onSubmitEditing={() => inputPassword.current?.focus()}
             />
-          </ContainerInput>
 
-          <Label>Senha</Label>
-          <ContainerInput>
             <Input
+              label="Senha"
+              error={errorsInputs.password}
               value={password}
               onChangeText={value => setPassword(value)}
               secureTextEntry
               placeholder="Senha"
               returnKeyType="send"
+              onSubmitEditing={() => handleLogin()}
             />
-          </ContainerInput>
 
-          <Button onPress={() => handleLogin()}>
-            <ButtonText>Entrar</ButtonText>
-          </Button>
-        </Form>
+            <Button onPress={handleLogin}>
+              <ButtonText>Entrar</ButtonText>
+            </Button>
+          </Form>
+        )}
       </Content>
     </Container>
   );

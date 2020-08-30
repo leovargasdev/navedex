@@ -9,6 +9,7 @@ declare module 'styled-components' {
       black: string;
       gray: string;
       onyx: string;
+      red: string;
     };
 
     fonts: {

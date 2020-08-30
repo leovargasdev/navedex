@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
 
+interface ContainerInputProps {
+  error: boolean;
+}
+
 export const Form = styled.View`
   margin: 0;
   width: 100%;
@@ -12,13 +16,15 @@ export const Label = styled.Text`
   color: ${({ theme }) => theme.colors.black};
 `;
 
-export const ContainerInput = styled.View`
+export const ContainerInput = styled.View<ContainerInputProps>`
   height: 40px;
   padding: 0 10px;
   margin: 4px 0 32px;
 
   background: transparent;
-  border: 1px solid ${({ theme }) => theme.colors.onyx};
+
+  border: 1px solid
+    ${({ theme, error }) => (error ? theme.colors.red : theme.colors.onyx)};
 `;
 
 export const Input = styled.TextInput.attrs({})`

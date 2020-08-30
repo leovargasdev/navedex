@@ -8,6 +8,7 @@ const defaultTheme: DefaultTheme = {
     black: '#212121',
     gray: '#9E9E9E',
     onyx: '#424242',
+    red: '#fc424a',
   },
 
   fonts: {
