@@ -5,12 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import Modal from '../Modal';
 import api from '../../services/api';
 
-import {
-  InfoText,
-  Controll,
-  ControllButton,
-  ControllButtonText,
-} from './styles';
+import { Controll, ControllButton, ControllButtonText } from './styles';
 
 interface ModalRemoveNaveProps {
   naverId: string;
@@ -46,10 +41,10 @@ const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
     <>
       <Modal
         title="Excluir Naver"
-        handleToggleModal={handleToggleModal}
+        content="Tem certeza que deseja excluir este naver?"
+        eventIconClose={handleToggleModal}
         visible={modalVisible}
       >
-        <InfoText>Tem certeza que deseja excluir este naver?</InfoText>
         <Controll>
           <ControllButton onPress={handleToggleModal}>
             <ControllButtonText style={{ color: colors.black }}>
@@ -70,11 +65,10 @@ const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
 
       <Modal
         title="Naver Excluído"
-        handleToggleModal={handleToggleModalSuccess}
+        content="Naver excluido com sucesso!"
+        eventIconClose={handleToggleModalSuccess}
         visible={successRemoveModal}
-      >
-        <InfoText>Naver excluido com sucesso!</InfoText>
-      </Modal>
+      />
     </>
   );
 };

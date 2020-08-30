@@ -3,18 +3,20 @@ import { Modal, TouchableOpacity } from 'react-native';
 import { FontAwesome as Icon } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 
-import { Container, Content, Header, Title } from './styles';
+import { Container, Content, Header, Title, ContentText } from './styles';
 
 interface ModalComponentProps {
   title: string;
+  content: string;
   visible: boolean;
-  handleToggleModal(): void;
+  eventIconClose(): void;
 }
 
 const ModalComponent: React.FC<ModalComponentProps> = ({
   title,
+  content,
   visible,
-  handleToggleModal,
+  eventIconClose,
   children,
 }) => {
   const { colors } = useTheme();
@@ -25,10 +27,11 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
         <Content>
           <Header>
             <Title>{title}</Title>
-            <TouchableOpacity onPress={handleToggleModal}>
+            <TouchableOpacity onPress={eventIconClose}>
               <Icon name="close" size={24} color={colors.black} />
             </TouchableOpacity>
           </Header>
+          {content && <ContentText>{content}</ContentText>}
           {children}
         </Content>
       </Container>

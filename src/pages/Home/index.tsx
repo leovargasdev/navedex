@@ -25,7 +25,7 @@ import { useAuth } from '../../hooks/auth';
 export interface NaverProps {
   id: string;
   name: string;
-  project: string;
+  job_role: string;
 }
 
 const Home: React.FC = () => {
@@ -45,7 +45,7 @@ const Home: React.FC = () => {
         response.data.map((naverResponse: NaverProps) => ({
           id: naverResponse.id,
           name: naverResponse.name,
-          project: naverResponse.project,
+          job_role: naverResponse.job_role,
         })),
       );
     });
@@ -85,7 +85,7 @@ const Home: React.FC = () => {
                 />
               </TouchableOpacity>
               <NaverName>{item.name}</NaverName>
-              <NaverProject>{item.project}</NaverProject>
+              <NaverProject>{item.job_role}</NaverProject>
 
               <NaverControll>
                 <TouchableOpacity onPress={() => handleToggleModal(item.id)}>

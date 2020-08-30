@@ -1,20 +1,5 @@
 import styled from 'styled-components/native';
 
-interface InfoTextProps {
-  legend?: boolean; // Atributo para definir se a fonte deve ser regular ou semiBold
-}
-
-export const InfoText = styled.Text<InfoTextProps>`
-  margin-top: 4px;
-  font-size: 16px;
-  line-height: 24px;
-  color: ${({ theme }) => theme.colors.black};
-
-  font-family: ${({ legend, theme }) =>
-    legend ? theme.fonts.semiBold : theme.fonts.regular};
-  margin-top: ${({ legend }) => (legend ? 24 : 0)}px;
-`;
-
 export const Legend = styled.Text`
   margin-top: 4px;
   font-size: 16px;

@@ -27,3 +27,12 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.semiBold};
   color: ${({ theme }) => theme.colors.black};
 `;
+
+export const ContentText = styled.Text`
+  margin-top: 4px;
+  font-size: 16px;
+  line-height: 24px;
+  color: ${({ theme }) => theme.colors.black};
+
+  font-family: ${({ theme }) => theme.fonts.regular};
+`;

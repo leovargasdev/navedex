@@ -9,7 +9,7 @@ export const Content = styled.ScrollView`
 `;
 
 export const Title = styled.Text`
-  margin: 32px auto 46px;
+  margin: 8px auto 24px;
   font-size: 22px;
   font-family: ${({ theme }) => theme.fonts.semiBold};
   color: ${({ theme }) => theme.colors.black};

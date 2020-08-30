@@ -22,6 +22,7 @@ import api from '../../services/api';
 interface NaverProps {
   id: string;
   name: string;
+  job_role: string;
   admission_date: string;
   project: string;
   birthdate: string;
@@ -80,7 +81,7 @@ const Naver: React.FC = () => {
       />
       <Content>
         <Name>{naver.name}</Name>
-        <InfoText>{naver.project}</InfoText>
+        <InfoText>{naver.job_role}</InfoText>
 
         <InfoText legend>Idade</InfoText>
         <InfoText>{ageFormatted}</InfoText>
