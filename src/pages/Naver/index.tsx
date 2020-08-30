@@ -1,11 +1,15 @@
 /* eslint-disable camelcase */
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from '@react-navigation/native';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { differenceInYears } from 'date-fns';
 
-import ModalRemoveNave from '../../components/ModalRemoveNave';
+import ModalRemoveNaver from '../../components/ModalRemoveNaver';
 
 import {
   Container,
@@ -38,6 +42,8 @@ interface NaverRouteProps {
 const Naver: React.FC = () => {
   const { colors } = useTheme();
   const { navigate } = useNavigation();
+  // Garantir os dados atualizados do naver, pois ele pode vim da rota EditNaver via Goback.
+  const isFocus = useIsFocused();
   // Foi criado a interface NaverRouteProps para que o typescript reconheca a propriedade naverId de dentro de route.params
   const {
     params: { naverId },
@@ -48,7 +54,7 @@ const Naver: React.FC = () => {
 
   useEffect(() => {
     api.get(`/navers/${naverId}`).then(response => setNaver(response.data));
-  }, [naverId]);
+  }, [naverId, isFocus]);
 
   // Pega o atual estado da variável modalVisible e inverte seu valor.
   const handleToggleModal = useCallback(
@@ -68,7 +74,7 @@ const Naver: React.FC = () => {
 
   return (
     <Container>
-      <ModalRemoveNave
+      <ModalRemoveNaver
         naverId={naverId}
         handleToggleModal={handleToggleModal}
         modalVisible={modalVisible}

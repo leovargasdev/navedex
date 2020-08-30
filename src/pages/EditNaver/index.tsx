@@ -1,11 +1,67 @@
-import React from 'react';
+/* eslint-disable camelcase */
+import React, { useCallback, useState, useEffect } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Alert } from 'react-native';
 
-import { Container, TextPage } from './styles';
+import { Container, Content, Title } from './styles';
+
+import FormNaver, { NaverProps } from '../../components/FormNaver';
+import Modal from '../../components/Modal';
+
+import api from '../../services/api';
+
+interface NaverRouteProps {
+  params: {
+    naverId: string;
+  };
+}
 
 const EditNaver: React.FC = () => {
+  const { goBack } = useNavigation();
+  const [naver, setNaver] = useState({} as NaverProps);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const {
+    params: { naverId },
+  } = useRoute() as NaverRouteProps;
+
+  useEffect(() => {
+    api.get(`/navers/${naverId}`).then(response => {
+      const { data } = response;
+      delete data.user_id;
+      delete data.id;
+      setNaver(data);
+    });
+  }, [naverId]);
+
+  const handleCloseModal = useCallback(() => {
+    setModalVisible(false);
+    // Pode redirecionar para o Navers ou Naver
+    goBack();
+  }, []);
+
+  const handleEditNaver = useCallback(async (naverRequest: NaverProps) => {
+    try {
+      await api.put(`/navers/${naverId}`, naverRequest);
+      setModalVisible(true);
+    } catch (err) {
+      Alert.alert('Erro no cadastro');
+    }
+  }, []);
+
   return (
     <Container>
-      <TextPage>EditNaver</TextPage>
+      <Content>
+        <Title>Editar Naver</Title>
+        <FormNaver onSubmit={handleEditNaver} initialData={naver} />
+      </Content>
+
+      <Modal
+        title="Naver editado"
+        content="Naver editado com successo!"
+        eventIconClose={handleCloseModal}
+        visible={modalVisible}
+      />
     </Container>
   );
 };

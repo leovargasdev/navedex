@@ -4,7 +4,7 @@ import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 
-import ModalRemoveNave from '../../components/ModalRemoveNave';
+import ModalRemoveNaver from '../../components/ModalRemoveNaver';
 import {
   Container,
   Header,
@@ -108,7 +108,7 @@ const Home: React.FC = () => {
         }}
       />
 
-      <ModalRemoveNave
+      <ModalRemoveNaver
         naverId={naverSelected}
         handleToggleModal={handleToggleModal}
         modalVisible={modalVisible}

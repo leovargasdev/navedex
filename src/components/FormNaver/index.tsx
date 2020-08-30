@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { TextInput, Platform, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
@@ -48,8 +48,16 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
 
   const [errorsInputs, setErrorsInputs] = useState(fieldsForm);
 
-  const [admissionDate, setAdmissionDate] = useState(new Date());
   const [birthdate, setBirthdate] = useState(new Date());
+  const [admissionDate, setAdmissionDate] = useState(new Date());
+
+  useEffect(() => {
+    if (initialData) {
+      setNaver(initialData);
+      setBirthdate(new Date(initialData.birthdate));
+      setAdmissionDate(new Date(initialData.admission_date));
+    }
+  }, [initialData]);
 
   const [showDatePicker, setShowDatePicker] = useState({
     admission: false,

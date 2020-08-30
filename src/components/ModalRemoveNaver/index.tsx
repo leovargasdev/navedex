@@ -65,7 +65,7 @@ const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
 
       <Modal
         title="Naver Excluído"
-        content="Naver excluido com sucesso!"
+        content="Naver excluído com sucesso!"
         eventIconClose={handleToggleModalSuccess}
         visible={successRemoveModal}
       />
