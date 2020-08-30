@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable camelcase */
 import React, { useEffect, useState, useCallback } from 'react';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
@@ -22,7 +22,7 @@ import api from '../../services/api';
 
 import { useAuth } from '../../hooks/auth';
 
-export interface NaverProps {
+interface NaverProps {
   id: string;
   name: string;
   job_role: string;
@@ -38,7 +38,6 @@ const Home: React.FC = () => {
   const [naverSelected, setNaverSelected] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
-  // OBS: NÃO ESTÁ FUNCIONANDO PARA QUANDO O ITEM É REMOVIDO!!!
   useEffect(() => {
     api.get('/navers').then(response => {
       setNavers(
@@ -55,6 +54,10 @@ const Home: React.FC = () => {
     setNaverSelected(id);
     setModalVisible(state => !state);
   }, []);
+
+  const refreshNavers = useCallback(() => {
+    setNavers(navers.filter(naver => naver.id !== naverSelected));
+  }, [naverSelected]);
 
   return (
     <Container>
@@ -112,6 +115,7 @@ const Home: React.FC = () => {
         naverId={naverSelected}
         handleToggleModal={handleToggleModal}
         modalVisible={modalVisible}
+        refreshNavers={refreshNavers}
       />
     </Container>
   );

@@ -27,7 +27,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
         <Content>
           <Header>
             <Title>{title}</Title>
-            <TouchableOpacity onPress={eventIconClose}>
+            <TouchableOpacity onPress={() => eventIconClose()}>
               <Icon name="close" size={24} color={colors.black} />
             </TouchableOpacity>
           </Header>

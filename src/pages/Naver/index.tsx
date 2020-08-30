@@ -53,7 +53,8 @@ const Naver: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    api.get(`/navers/${naverId}`).then(response => setNaver(response.data));
+    if (naverId)
+      api.get(`/navers/${naverId}`).then(response => setNaver(response.data));
   }, [naverId, isFocus]);
 
   // Pega o atual estado da variável modalVisible e inverte seu valor.
@@ -78,6 +79,7 @@ const Naver: React.FC = () => {
         naverId={naverId}
         handleToggleModal={handleToggleModal}
         modalVisible={modalVisible}
+        refreshNavers={() => {}}
       />
 
       <Avatar

@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { Alert } from 'react-native';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
@@ -11,12 +12,14 @@ interface ModalRemoveNaveProps {
   naverId: string;
   modalVisible: boolean;
   handleToggleModal(): void;
+  refreshNavers(): void;
 }
 
 const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
   naverId,
   handleToggleModal,
   modalVisible,
+  refreshNavers,
 }) => {
   const { colors } = useTheme();
   const { canGoBack, goBack } = useNavigation();
@@ -24,9 +27,14 @@ const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
   const [successRemoveModal, setSuccessRemoveModal] = useState(false);
 
   const handleDeleteNaver = useCallback(async () => {
-    await api.delete(`/navers/${naverId}`);
-    handleToggleModal();
-    setSuccessRemoveModal(true);
+    try {
+      await api.delete(`/navers/${naverId}`);
+      handleToggleModal();
+      refreshNavers();
+      setSuccessRemoveModal(true);
+    } catch (err) {
+      Alert.alert('Erro ao remover Naver');
+    }
   }, [naverId]);
 
   const handleToggleModalSuccess = useCallback(() => {
@@ -46,7 +54,7 @@ const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
         visible={modalVisible}
       >
         <Controll>
-          <ControllButton onPress={handleToggleModal}>
+          <ControllButton onPress={() => handleToggleModal()}>
             <ControllButtonText style={{ color: colors.black }}>
               Cancelar
             </ControllButtonText>
