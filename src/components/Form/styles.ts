@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 
 export const Form = styled.View`
   margin: 0;
-  /* padding: 0 16px; */
   width: 100%;
   align-items: stretch;
 `;

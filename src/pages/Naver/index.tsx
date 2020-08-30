@@ -60,11 +60,10 @@ const Naver: React.FC = () => {
     [naver.birthdate],
   );
 
-  const admissionDateFormatted = useMemo(
-    () =>
-      `${differenceInYears(new Date(), new Date(naver.admission_date))} anos`,
-    [naver.admission_date],
-  );
+  const admissionDateFormatted = useMemo(() => {
+    const years = differenceInYears(new Date(), new Date(naver.admission_date));
+    return `${years} ${years === 1 ? ' ano' : ' anos'}`;
+  }, [naver.admission_date]);
 
   return (
     <Container>
