@@ -25,7 +25,7 @@ export const ContainerInput = styled.View<ContainerInputProps>`
     ${({ theme, error }) => (error ? theme.colors.red : theme.colors.onyx)};
 `;
 
-export const Input = styled.TextInput.attrs({})`
+export const Input = styled.TextInput`
   flex: 1;
   font-size: 16px;
   font-family: ${({ theme }) => theme.fonts.regular};

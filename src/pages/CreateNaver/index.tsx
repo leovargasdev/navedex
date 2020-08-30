@@ -29,6 +29,11 @@ const CreateNaver: React.FC = () => {
 
   return (
     <Container>
+      {/* <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled
+      ></KeyboardAvoidingView> */}
       <Content>
         <Title>Adicionar Naver</Title>
         <FormNaver onSubmit={handleAddNaver} />

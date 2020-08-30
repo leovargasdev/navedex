@@ -64,10 +64,9 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
     birthdate: false,
   });
 
-  // const inputJobRole = useRef<TextInput>(null);
-  // const inputBirthdate = useRef<TextInput>(null);
-  // const inputProject = useRef<TextInput>(null);
-  // const inputurl = useRef<TextInput>(null);
+  const inputJobRole = useRef<TextInput>(null);
+  const inputProject = useRef<TextInput>(null);
+  const inputUrl = useRef<TextInput>(null);
 
   const handleDateChanged = useCallback(
     (date: Date | undefined, field: string) => {
@@ -151,11 +150,11 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
         keyboardType="default"
         placeholder="Nome"
         returnKeyType="next"
-        // onSubmitEditing={() => inputJobRole.current?.focus()}
+        onSubmitEditing={() => inputJobRole.current?.focus()}
       />
 
       <Input
-        // ref={inputJobRole}
+        ref={inputJobRole}
         label="Cargo"
         error={errorsInputs.job_role}
         value={naver.job_role}
@@ -164,7 +163,6 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
         keyboardType="default"
         placeholder="Cargo"
         returnKeyType="next"
-        // onSubmitEditing={() => inputBirthdate.current?.focus()}
       />
 
       <Label>Idade</Label>
@@ -173,8 +171,7 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
           setShowDatePicker({
             ...showDatePicker,
             birthdate: !showDatePicker.birthdate,
-          })
-        }
+          })}
       >
         <ButtonDatePickerText>Selecionar uma data</ButtonDatePickerText>
       </ButtonDatePicker>
@@ -194,7 +191,8 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
           setShowDatePicker({
             ...showDatePicker,
             admission: !showDatePicker.admission,
-          })}
+          })
+        }
       >
         <ButtonDatePickerText>Selecionar uma data</ButtonDatePickerText>
       </ButtonDatePicker>
@@ -209,7 +207,7 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
       )}
 
       <Input
-        // ref={inputProject}
+        ref={inputProject}
         label="Projetos que participou"
         error={errorsInputs.project}
         value={naver.project}
@@ -218,11 +216,11 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
         keyboardType="default"
         placeholder="Projetos que participou"
         returnKeyType="next"
-        // onSubmitEditing={() => inputurl.current?.focus()}
+        onSubmitEditing={() => inputUrl.current?.focus()}
       />
 
       <Input
-        // ref={inputurl}
+        ref={inputUrl}
         label="URL da foto do naver"
         error={errorsInputs.url}
         value={naver.url}

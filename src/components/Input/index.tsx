@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useImperativeHandle, forwardRef } from 'react';
 import { TextInputProps } from 'react-native';
 
 import { Container, Label, ContainerInput, Input, ErrorText } from './styles';
@@ -8,18 +8,36 @@ interface InputProps extends TextInputProps {
   error: string;
 }
 
-// OBS: IMPLEMENTAR O REF DO INPUT
+interface InputRef {
+  focus(): void;
+}
 
-const InputComponent: React.FC<InputProps> = ({ error, label, ...rest }) => {
+const InputComponent: React.RefForwardingComponent<InputRef, InputProps> = (
+  { error, label, ...rest },
+  ref,
+) => {
+  const inputElementRef = useRef<any>(null);
+
+  useImperativeHandle(ref, () => ({
+    focus() {
+      inputElementRef.current.focus();
+    },
+  }));
+
   return (
     <Container>
       <Label>{label}</Label>
       <ContainerInput error={!!error}>
-        <Input placeholderTextColor="#9E9E9E" {...rest} />
+        <Input
+          ref={inputElementRef}
+          placeholderTextColor="#9E9E9E"
+          keyboardAppearance="dark"
+          {...rest}
+        />
       </ContainerInput>
       {!!error && <ErrorText>{error}</ErrorText>}
     </Container>
   );
 };
 
-export default InputComponent;
+export default forwardRef(InputComponent);

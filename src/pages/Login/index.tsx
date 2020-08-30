@@ -24,7 +24,7 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [errorsInputs, setErrorsInputs] = useState(fieldsForm);
 
-  // const inputPassword = useRef<TextInput>(null);
+  const inputPassword = useRef<TextInput>(null);
 
   const { signIn } = useAuth();
 
@@ -51,13 +51,10 @@ const Login: React.FC = () => {
       if (err instanceof Yup.ValidationError) {
         const validationErrors: Errors = {};
 
-        // const fields = Object.keys(fieldsForm);
-
-        // fields.map( fieldname =>)
         err.inner.forEach(e => {
           validationErrors[e.path] = e.message;
         });
-        //
+
         setErrorsInputs({ ...fieldsForm, ...validationErrors });
 
         Alert.alert(
@@ -92,10 +89,11 @@ const Login: React.FC = () => {
               keyboardType="email-address"
               placeholder="E-mail"
               returnKeyType="next"
-              // onSubmitEditing={() => inputPassword.current?.focus()}
+              onSubmitEditing={() => inputPassword.current?.focus()}
             />
 
             <Input
+              ref={inputPassword}
               label="Senha"
               error={errorsInputs.password}
               value={password}
