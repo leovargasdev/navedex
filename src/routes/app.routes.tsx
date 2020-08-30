@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
-import { Image } from 'react-native';
+import React from 'react';
+import { Image, View, useWindowDimensions } from 'react-native';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import LogoNavers from '../assets/logo.png';
@@ -13,25 +18,27 @@ import EditNaver from '../pages/EditNaver';
 
 import { useAuth } from '../hooks/auth';
 
-function NotificationsScreen() {
-  const { signOut } = useAuth();
-
-  useEffect(() => signOut(), [signOut]);
-
-  return <></>;
-}
-
-// const ButtonToggleMenu = ({}) => (
-//   <RectButton onPress={() => {}}>
-//     <Icon name="bars" color="#424242" size={24} />
-//   </RectButton>
-// );
-
 const LogoTitle = () => (
   <Image style={{ resizeMode: 'contain', height: 32 }} source={LogoNavers} />
 );
 
 const StackNaver = createStackNavigator();
+
+const MenuToggle = (navigation: any) => {
+  return (
+    <RectButton onPress={() => navigation.toggleDrawer()}>
+      <Icon name="bars" color="#212121" size={24} />
+    </RectButton>
+  );
+};
+
+const MenuGoBack = (navigation: any) => {
+  return (
+    <RectButton onPress={() => navigation.goBack()}>
+      <Icon name="chevron-left" color="#424242" size={24} />
+    </RectButton>
+  );
+};
 
 const NaversNavigator = () => {
   return (
@@ -40,7 +47,7 @@ const NaversNavigator = () => {
         headerShown: true,
         headerStyle: { height: 80 },
         headerTitleAlign: 'center',
-        headerTitle: props => <LogoTitle {...props} />,
+        headerTitle: () => LogoTitle(),
         headerLeftContainerStyle: {
           marginLeft: 16,
         },
@@ -50,44 +57,28 @@ const NaversNavigator = () => {
         name="Navers"
         component={Home}
         options={({ navigation }) => ({
-          headerLeft: () => (
-            <RectButton onPress={() => navigation.toggleDrawer()}>
-              <Icon name="bars" color="#424242" size={24} />
-            </RectButton>
-          ),
+          headerLeft: () => MenuToggle(navigation),
         })}
       />
       <StackNaver.Screen
         name="Naver"
         component={Naver}
         options={({ navigation }) => ({
-          headerLeft: () => (
-            <RectButton onPress={() => navigation.goBack()}>
-              <Icon name="chevron-left" color="#424242" size={24} />
-            </RectButton>
-          ),
+          headerLeft: () => MenuGoBack(navigation),
         })}
       />
       <StackNaver.Screen
         name="CreateNaver"
         component={CreateNaver}
         options={({ navigation }) => ({
-          headerLeft: () => (
-            <RectButton onPress={() => navigation.goBack()}>
-              <Icon name="chevron-left" color="#424242" size={24} />
-            </RectButton>
-          ),
+          headerLeft: () => MenuGoBack(navigation),
         })}
       />
       <StackNaver.Screen
         name="EditNaver"
         component={EditNaver}
         options={({ navigation }) => ({
-          headerLeft: () => (
-            <RectButton onPress={() => navigation.goBack()}>
-              <Icon name="chevron-left" color="#424242" size={24} />
-            </RectButton>
-          ),
+          headerLeft: () => MenuGoBack(navigation),
         })}
       />
     </StackNaver.Navigator>
@@ -96,13 +87,60 @@ const NaversNavigator = () => {
 
 const Drawer = createDrawerNavigator();
 
-const App = () => {
-  return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Navers" component={NaversNavigator} />
-      <Drawer.Screen name="Sair" component={NotificationsScreen} />
-    </Drawer.Navigator>
-  );
-};
+function CustomDrawerContent(props: any) {
+  const { signOut } = useAuth();
+  const dimensions = useWindowDimensions();
 
-export default App;
+  return (
+    <DrawerContentScrollView {...props} style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: dimensions.height,
+        }}
+      >
+        <DrawerItem
+          key="menu"
+          onPress={() => props.navigation.toggleDrawer()}
+          label={() => <Icon name="bars" color="#212121" size={24} />}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+        />
+        <DrawerItemList {...props} />
+        <DrawerItem
+          key="signout"
+          label="Sair"
+          onPress={() => signOut()}
+          labelStyle={{ fontSize: 25, color: '#212121' }}
+        />
+      </View>
+    </DrawerContentScrollView>
+  );
+}
+
+const AppRoutes: React.FC = () => (
+  <Drawer.Navigator
+    initialRouteName="Home"
+    drawerContent={({ ...props }) => <CustomDrawerContent {...props} />}
+    drawerStyle={{
+      flex: 1,
+      backgroundColor: '#FFF',
+    }}
+    drawerContentOptions={{
+      activeBackgroundColor: '#fff',
+      activeTintColor: '#212121',
+      labelStyle: {
+        fontSize: 25,
+      },
+    }}
+  >
+    <Drawer.Screen name="Navers" component={NaversNavigator} />
+  </Drawer.Navigator>
+);
+
+export default AppRoutes;
