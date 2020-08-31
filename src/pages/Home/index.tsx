@@ -62,9 +62,7 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Header>
-        <TouchableOpacity onPress={() => signOut()}>
-          <HeaderText>SAIR</HeaderText>
-        </TouchableOpacity>
+        <HeaderText>Navers</HeaderText>
         <HeaderButton onPress={() => navigate('CreateNaver')}>
           <HeaderButtonText>Adicionar naver</HeaderButtonText>
         </HeaderButton>
@@ -115,7 +113,7 @@ const Home: React.FC = () => {
         naverId={naverSelected}
         handleToggleModal={handleToggleModal}
         modalVisible={modalVisible}
-        refreshNavers={refreshNavers}
+        refreshPage={refreshNavers}
       />
     </Container>
   );

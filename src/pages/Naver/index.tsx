@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable camelcase */
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
+import { Alert } from 'react-native';
 import {
   useNavigation,
   useRoute,
-  useIsFocused,
+  useFocusEffect,
 } from '@react-navigation/native';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
@@ -42,8 +44,6 @@ interface NaverRouteProps {
 const Naver: React.FC = () => {
   const { colors } = useTheme();
   const { navigate } = useNavigation();
-  // Garantir os dados atualizados do naver, pois ele pode vim da rota EditNaver via Goback.
-  const isFocus = useIsFocused();
   // Foi criado a interface NaverRouteProps para que o typescript reconheca a propriedade naverId de dentro de route.params
   const {
     params: { naverId },
@@ -52,10 +52,19 @@ const Naver: React.FC = () => {
   const [naver, setNaver] = useState({} as NaverProps);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
-    if (naverId)
-      api.get(`/navers/${naverId}`).then(response => setNaver(response.data));
-  }, [naverId, isFocus]);
+  // Garantir os dados atualizados do naver, pois ele pode vim da rota EditNaver via Goback.
+  useFocusEffect(
+    useCallback(() => {
+      try {
+        if (naverId)
+          api
+            .get(`/navers/${naverId}`)
+            .then(response => setNaver(response.data));
+      } catch (err) {
+        Alert.alert('Erro ao localizar naver');
+      }
+    }, [naverId]),
+  );
 
   // Pega o atual estado da variável modalVisible e inverte seu valor.
   const handleToggleModal = useCallback(
@@ -79,7 +88,7 @@ const Naver: React.FC = () => {
         naverId={naverId}
         handleToggleModal={handleToggleModal}
         modalVisible={modalVisible}
-        refreshNavers={() => {}}
+        refreshPage={() => {}}
       />
 
       <Avatar

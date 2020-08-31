@@ -5,9 +5,10 @@ interface ContainerInputProps {
 }
 
 export const Form = styled.View`
-  margin: 0;
   width: 100%;
   align-items: stretch;
+
+  margin-bottom: 32px;
 `;
 
 export const Label = styled.Text`

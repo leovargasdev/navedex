@@ -1,9 +1,8 @@
-/* eslint-disable camelcase */
 import React, { useCallback, useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Alert } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform } from 'react-native';
 
-import { Container, Content, Title } from './styles';
+import { Container, Title } from './styles';
 
 import FormNaver, { NaverProps } from '../../components/FormNaver';
 import Modal from '../../components/Modal';
@@ -50,11 +49,15 @@ const EditNaver: React.FC = () => {
   }, []);
 
   return (
-    <Container>
-      <Content>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      enabled
+    >
+      <Container keyboardShouldPersistTaps="handled">
         <Title>Editar Naver</Title>
         <FormNaver onSubmit={handleEditNaver} initialData={naver} />
-      </Content>
+      </Container>
 
       <Modal
         title="Naver editado"
@@ -62,7 +65,7 @@ const EditNaver: React.FC = () => {
         eventIconClose={handleCloseModal}
         visible={modalVisible}
       />
-    </Container>
+    </KeyboardAvoidingView>
   );
 };
 

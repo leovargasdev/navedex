@@ -115,7 +115,10 @@ function CustomDrawerContent(props: any) {
         <DrawerItem
           key="signout"
           label="Sair"
-          onPress={() => signOut()}
+          onPress={() => {
+            props.navigation.toggleDrawer();
+            signOut();
+          }}
           labelStyle={{ fontSize: 25, color: '#212121' }}
         />
       </View>

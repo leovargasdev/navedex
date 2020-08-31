@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Alert } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform } from 'react-native';
 
-import { Container, Content, Title } from './styles';
+import { Container, Title } from './styles';
 
 import FormNaver, { NaverProps } from '../../components/FormNaver';
 import Modal from '../../components/Modal';
@@ -28,16 +28,15 @@ const CreateNaver: React.FC = () => {
   }, []);
 
   return (
-    <Container>
-      {/* <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        enabled
-      ></KeyboardAvoidingView> */}
-      <Content>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      enabled
+    >
+      <Container keyboardShouldPersistTaps="handled">
         <Title>Adicionar Naver</Title>
         <FormNaver onSubmit={handleAddNaver} />
-      </Content>
+      </Container>
 
       <Modal
         title="Naver adicionado"
@@ -45,7 +44,7 @@ const CreateNaver: React.FC = () => {
         eventIconClose={handleCloseModal}
         visible={modalVisible}
       />
-    </Container>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -1,11 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.ScrollView`
-  flex: 1;
-`;
-
-export const Content = styled.ScrollView`
-  padding: 24px 16px;
+  padding: 24px 16px 0;
 `;
 
 export const Title = styled.Text`

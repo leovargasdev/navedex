@@ -12,14 +12,14 @@ interface ModalRemoveNaveProps {
   naverId: string;
   modalVisible: boolean;
   handleToggleModal(): void;
-  refreshNavers(): void;
+  refreshPage(): void;
 }
 
 const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
   naverId,
   handleToggleModal,
   modalVisible,
-  refreshNavers,
+  refreshPage,
 }) => {
   const { colors } = useTheme();
   const { canGoBack, goBack } = useNavigation();
@@ -30,7 +30,7 @@ const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
     try {
       await api.delete(`/navers/${naverId}`);
       handleToggleModal();
-      refreshNavers();
+      refreshPage();
       setSuccessRemoveModal(true);
     } catch (err) {
       Alert.alert('Erro ao remover Naver');
