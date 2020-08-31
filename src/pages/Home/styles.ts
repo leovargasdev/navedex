@@ -58,7 +58,7 @@ export const NaverName = styled.Text`
   color: ${({ theme }) => theme.colors.black};
 `;
 
-export const NaverProject = styled.Text`
+export const NaverJobRole = styled.Text`
   margin-top: 5px;
   font-size: 14px;
   font-family: ${({ theme }) => theme.fonts.regular};

@@ -1,10 +1,12 @@
-/* eslint-disable camelcase */
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { FontAwesome5 as Icon } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import ModalRemoveNaver from '../../components/ModalRemoveNaver';
+
+import api from '../../services/api';
+
 import {
   Container,
   Header,
@@ -15,40 +17,35 @@ import {
   Naver,
   NaverAvatar,
   NaverName,
-  NaverProject,
+  NaverJobRole,
   NaverControll,
 } from './styles';
-import api from '../../services/api';
-
-import { useAuth } from '../../hooks/auth';
-
-interface NaverProps {
+// A interface foi exportada para ser usada no arquivo styles.ts
+export interface NaverProps {
   id: string;
   name: string;
   job_role: string;
 }
 
 const Home: React.FC = () => {
-  // Verificando o foco da tela/rota, desta maneira, podemos adicionar essa variável no array de dependências
-  // do useEffect que carrega os navers, assim podemos recarregar a lista de navers quando ela sobre alguma alteração.
-  const isFocus = useIsFocused();
   const { navigate } = useNavigation();
-  const { signOut } = useAuth();
   const [navers, setNavers] = useState<NaverProps[]>([]);
   const [naverSelected, setNaverSelected] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
-    api.get('/navers').then(response => {
-      setNavers(
-        response.data.map((naverResponse: NaverProps) => ({
-          id: naverResponse.id,
-          name: naverResponse.name,
-          job_role: naverResponse.job_role,
-        })),
-      );
-    });
-  }, [isFocus]);
+  useFocusEffect(
+    useCallback(() => {
+      api.get('/navers').then(response => {
+        setNavers(
+          response.data.map((naverResponse: NaverProps) => ({
+            id: naverResponse.id,
+            name: naverResponse.name,
+            job_role: naverResponse.job_role,
+          })),
+        );
+      });
+    }, []),
+  );
 
   const handleToggleModal = useCallback((id = naverSelected) => {
     setNaverSelected(id);
@@ -86,7 +83,7 @@ const Home: React.FC = () => {
                 />
               </TouchableOpacity>
               <NaverName>{item.name}</NaverName>
-              <NaverProject>{item.job_role}</NaverProject>
+              <NaverJobRole>{item.job_role}</NaverJobRole>
 
               <NaverControll>
                 <TouchableOpacity onPress={() => handleToggleModal(item.id)}>

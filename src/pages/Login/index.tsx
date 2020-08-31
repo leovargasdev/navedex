@@ -3,10 +3,9 @@ import { Alert, TextInput, ActivityIndicator } from 'react-native';
 import * as Yup from 'yup';
 
 import Input from '../../components/Input';
-
-import LogoNave from '../../assets/logo.png';
 import { useAuth } from '../../hooks/auth';
 
+import LogoNave from '../../assets/logo.png';
 import { Container, Content, Logo, Form, Button, ButtonText } from './styles';
 
 interface Errors {
@@ -30,21 +29,16 @@ const Login: React.FC = () => {
 
   const handleLogin = useCallback(async () => {
     setLoading(true);
-    setErrorsInputs(fieldsForm); // Limpando os erros
     try {
+      setErrorsInputs(fieldsForm); // Limpando os erros
       const schema = Yup.object().shape({
         email: Yup.string()
           .required('O email é obrigatório')
           .email('Email inválido'),
         password: Yup.string().required('A senha é obrigatória'),
       });
-
-      await schema.validate(
-        { email, password },
-        {
-          abortEarly: false,
-        },
-      );
+      // abortEarly: Aborta a validação antecipada
+      await schema.validate({ email, password }, { abortEarly: false });
 
       await signIn({ email, password });
     } catch (err) {
@@ -64,7 +58,7 @@ const Login: React.FC = () => {
       }
     }
     setLoading(false);
-  }, [signIn, email, password]);
+  }, [signIn, setLoading, email, password]);
 
   return (
     <Container>
@@ -85,7 +79,6 @@ const Login: React.FC = () => {
               onChangeText={value => setEmail(value)}
               autoCorrect={false}
               autoCapitalize="none"
-              placeholderTextColor="#9E9E9E"
               keyboardType="email-address"
               placeholder="E-mail"
               returnKeyType="next"
@@ -104,7 +97,7 @@ const Login: React.FC = () => {
               onSubmitEditing={() => handleLogin()}
             />
 
-            <Button onPress={handleLogin}>
+            <Button onPress={() => handleLogin()}>
               <ButtonText>Entrar</ButtonText>
             </Button>
           </Form>

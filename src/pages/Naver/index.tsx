@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable camelcase */
 import React, { useState, useCallback, useMemo } from 'react';
 import { Alert } from 'react-native';
 import {
@@ -15,8 +14,8 @@ import ModalRemoveNaver from '../../components/ModalRemoveNaver';
 
 import {
   Container,
-  Avatar,
   Content,
+  Avatar,
   Name,
   InfoText,
   Controll,
@@ -34,7 +33,7 @@ interface NaverProps {
   birthdate: string;
   url: string;
 }
-
+// Com esta interface é possível fazer o typescript reconhecer as propriedades passadas no params de dentro de route
 interface NaverRouteProps {
   params: {
     naverId: string;
@@ -44,15 +43,13 @@ interface NaverRouteProps {
 const Naver: React.FC = () => {
   const { colors } = useTheme();
   const { navigate } = useNavigation();
-  // Foi criado a interface NaverRouteProps para que o typescript reconheca a propriedade naverId de dentro de route.params
   const {
     params: { naverId },
   } = useRoute() as NaverRouteProps;
 
   const [naver, setNaver] = useState({} as NaverProps);
   const [modalVisible, setModalVisible] = useState(false);
-
-  // Garantir os dados atualizados do naver, pois ele pode vim da rota EditNaver via Goback.
+  // Garante que os dados do naver serão atualizados ao voltar da tela de edição
   useFocusEffect(
     useCallback(() => {
       try {
@@ -65,7 +62,6 @@ const Naver: React.FC = () => {
       }
     }, [naverId]),
   );
-
   // Pega o atual estado da variável modalVisible e inverte seu valor.
   const handleToggleModal = useCallback(
     () => setModalVisible(state => !state),

@@ -29,10 +29,13 @@
       "@typescript-eslint"
     ],
     "rules": {
+      "prettier/prettier": "error",
+      "react/jsx-curly-newline": "off",
       "eslint/global-require": "off",
       "react/prop-types": "off",
       "import/prefer-default-export": "off",
       "react/jsx-props-no-spreading": "off",
+      "camelcase": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
       "import/extensions": [
         "error",

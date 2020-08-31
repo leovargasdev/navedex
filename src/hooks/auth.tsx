@@ -97,7 +97,7 @@ function useAuth(): AuthContextData {
 
   return context;
 }
-
+// Componente utilizado no App.tsx, ao usar ele é possivel ter acesso as variáveis
 const AppProvider: React.FC = ({ children }) => {
   return <AuthProvider>{children}</AuthProvider>;
 };

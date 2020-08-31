@@ -30,6 +30,8 @@ const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
     try {
       await api.delete(`/navers/${naverId}`);
       handleToggleModal();
+      // Essa função serve para atualizar a lista de navers da home, ela remove o naver da lista local
+      // Dessa maneira não será necessário efetuar outra busca na api
       refreshPage();
       setSuccessRemoveModal(true);
     } catch (err) {
@@ -39,9 +41,8 @@ const ModalRemoveNave: React.FC<ModalRemoveNaveProps> = ({
 
   const handleToggleModalSuccess = useCallback(() => {
     setSuccessRemoveModal(false);
-
-    // É verificado se é possível realizar o goBack, pelo fato da requisação ser feita da rota Navers, pois
-    // não existe nenhuma rota anterior que a Navers, desta maneira o goBack resultaria em um erro na aplicação.
+    // É feito a verificação do goBack porque o uso deste componente também pode ser feito pela rota Navers
+    // e ela é uma rota raiz, assim esse condicional que o goBack não iria gerar algum erro no app.
     if (canGoBack()) goBack();
   }, []);
 

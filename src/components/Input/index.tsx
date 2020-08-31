@@ -11,13 +11,15 @@ interface InputProps extends TextInputProps {
 interface InputRef {
   focus(): void;
 }
-
+// Não foi usado o FC porque ele não reconhece referências, pois isso foi usado o RefForwardingComponent
+// 1º parâmetro: propriedades da minha referência, no caso só vou usar o focus
+// 2º parâmetro: propriedades do meu componente
 const InputComponent: React.RefForwardingComponent<InputRef, InputProps> = (
   { error, label, ...rest },
   ref,
 ) => {
   const inputElementRef = useRef<any>(null);
-
+  // useImperativeHandle é usado para passar informações ao componente superior(componente pai)
   useImperativeHandle(ref, () => ({
     focus() {
       inputElementRef.current.focus();
@@ -31,7 +33,7 @@ const InputComponent: React.RefForwardingComponent<InputRef, InputProps> = (
         <Input
           ref={inputElementRef}
           placeholderTextColor="#9E9E9E"
-          keyboardAppearance="dark"
+          keyboardAppearance="dark" // Ativa o teclado dark no IOS
           {...rest}
         />
       </ContainerInput>

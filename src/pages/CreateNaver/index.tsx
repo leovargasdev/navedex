@@ -2,20 +2,20 @@ import React, { useCallback, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Alert, KeyboardAvoidingView, Platform } from 'react-native';
 
-import { Container, Title } from './styles';
-
 import FormNaver, { NaverProps } from '../../components/FormNaver';
 import Modal from '../../components/Modal';
+
+import { Container, Title } from './styles';
 
 import api from '../../services/api';
 
 const CreateNaver: React.FC = () => {
-  const { navigate } = useNavigation();
+  const { goBack } = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleCloseModal = useCallback(() => {
     setModalVisible(false);
-    navigate('Navers');
+    goBack();
   }, []);
 
   const handleAddNaver = useCallback(async (naver: NaverProps) => {
@@ -23,7 +23,7 @@ const CreateNaver: React.FC = () => {
       await api.post('/navers', naver);
       setModalVisible(true);
     } catch (err) {
-      Alert.alert('Erro no cadastro');
+      Alert.alert('Erro ao cadastrar o Naver');
     }
   }, []);
 

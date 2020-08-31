@@ -2,12 +2,12 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Alert, KeyboardAvoidingView, Platform } from 'react-native';
 
-import { Container, Title } from './styles';
-
 import FormNaver, { NaverProps } from '../../components/FormNaver';
 import Modal from '../../components/Modal';
 
 import api from '../../services/api';
+
+import { Container, Title } from './styles';
 
 interface NaverRouteProps {
   params: {
@@ -35,7 +35,6 @@ const EditNaver: React.FC = () => {
 
   const handleCloseModal = useCallback(() => {
     setModalVisible(false);
-    // Pode redirecionar para o Navers ou Naver
     goBack();
   }, []);
 

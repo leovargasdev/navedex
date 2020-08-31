@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { TextInput, Platform, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -10,10 +9,10 @@ import { Label } from '../Input/styles';
 
 import {
   Form,
-  Button,
-  ButtonText,
-  ButtonDatePicker,
-  ButtonDatePickerText,
+  SubmitButton,
+  SubmitButtonText,
+  DatePickerButton,
+  DatePickerButtonText,
 } from './styles';
 
 export interface NaverProps {
@@ -132,7 +131,7 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
         setErrorsInputs({ ...fieldsForm, ...validationErrors });
 
         Alert.alert(
-          'Erro na autenticação',
+          'Erro ao criar um Naver',
           'Verifique os campos do formulário',
         );
       }
@@ -162,19 +161,23 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
         autoCapitalize="sentences"
         keyboardType="default"
         placeholder="Cargo"
-        returnKeyType="next"
       />
 
       <Label>Idade</Label>
-      <ButtonDatePicker
+      <DatePickerButton
         onPress={() =>
           setShowDatePicker({
             ...showDatePicker,
             birthdate: !showDatePicker.birthdate,
-          })}
+          })
+        }
       >
-        <ButtonDatePickerText>Selecionar uma data</ButtonDatePickerText>
-      </ButtonDatePicker>
+        <DatePickerButtonText>
+          {showDatePicker.birthdate
+            ? 'Fechar calendário'
+            : 'Selecionar uma data'}
+        </DatePickerButtonText>
+      </DatePickerButton>
 
       {showDatePicker.birthdate && (
         <DateTimePicker
@@ -186,7 +189,7 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
       )}
 
       <Label>Tempo de Empresa</Label>
-      <ButtonDatePicker
+      <DatePickerButton
         onPress={() =>
           setShowDatePicker({
             ...showDatePicker,
@@ -194,8 +197,12 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
           })
         }
       >
-        <ButtonDatePickerText>Selecionar uma data</ButtonDatePickerText>
-      </ButtonDatePicker>
+        <DatePickerButtonText>
+          {showDatePicker.admission
+            ? 'Fechar calendário'
+            : 'Selecionar uma data'}
+        </DatePickerButtonText>
+      </DatePickerButton>
 
       {showDatePicker.admission && (
         <DateTimePicker
@@ -229,11 +236,12 @@ const FormNaver: React.FC<FormNaverProps> = ({ onSubmit, initialData }) => {
         keyboardType="url"
         placeholder="URL da foto do naver"
         returnKeyType="send"
+        onSubmitEditing={() => handleSubmitForm()}
       />
 
-      <Button onPress={() => handleSubmitForm()}>
-        <ButtonText>Salvar</ButtonText>
-      </Button>
+      <SubmitButton onPress={() => handleSubmitForm()}>
+        <SubmitButtonText>Salvar</SubmitButtonText>
+      </SubmitButton>
     </Form>
   );
 };

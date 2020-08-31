@@ -34,13 +34,6 @@ export const InfoText = styled.Text<InfoTextProps>`
   margin-top: ${({ legend }) => (legend ? 24 : 0)}px;
 `;
 
-export const Legend = styled.Text`
-  margin-top: 4px;
-  font-size: 16px;
-  font-family: ${({ theme }) => theme.fonts.regular};
-  color: ${({ theme }) => theme.colors.black};
-`;
-
 export const Controll = styled.View`
   flex-direction: row;
   align-items: center;
