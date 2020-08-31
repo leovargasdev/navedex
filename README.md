@@ -1,6 +1,6 @@
-<h1 align="center">
-  <img alt="Naver" title="Naver" src=".github/logo.png" width="300px" />
-</h1>
+<p align="center">
+  <img alt="Naver" title="Naver" src=".github/logo.png" width="200px" />
+</p>
 
 <h4 align = "center">
   Plataforma navers
@@ -44,11 +44,11 @@ $ expo start
 
 ## 📝 Funcionalidades Propostas
 
-- [x] **Login e controle de autenticação**: O app deverá possuir um fluxo de autenticação, onde o usuário só pode acessar as telas internas (listagem, formulários) passando pela tela de login com as credenciais.
+- [x] **Controle de autenticação e Login**: O app deverá possuir um fluxo de autenticação, onde o usuário só pode acessar as telas internas (listagem, formulários) passando pela tela de login com as credenciais.
 
 - [x] **Listagem dos Navers**: A página inicial do app terá uma lista dos navers.
 
-- [x] **Visualizar Naver**: Ao clicar em algum naver da listagem, o usuário terá uma visualização completa das informações do mesmo.
+- [x] **Visualizar um Naver**: Ao clicar em algum naver da listagem, o usuário terá uma visualização completa das informações do mesmo.
 
 - [x] **Cadastrar um Naver**: O usuário precisa ter a possibilidade de criar um novo naver.
 
